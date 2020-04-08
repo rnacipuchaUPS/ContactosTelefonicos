@@ -10,12 +10,17 @@ import ec.edu.ups.EN.TelefonoEN;
 import ec.edu.ups.ON.ContactoON;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author nacip
  */
 public class Principal extends javax.swing.JFrame {
+    private DefaultTableModel modelo;
+    ContactoON c = new ContactoON();
     List<TelefonoEN> telefonos = new ArrayList<TelefonoEN>();
     TelefonoEN t = new TelefonoEN();
 
@@ -25,6 +30,7 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
      this.setLocation(500, 100);
+     modelo = new DefaultTableModel();
     }
 
     /**
@@ -301,7 +307,34 @@ public class Principal extends javax.swing.JFrame {
         });
     }
    
+    public void limpiarTabla(JTable tabla) {
+        try {
+            DefaultTableModel modelos = (DefaultTableModel) tabla.getModel();
+            int filas = tabla.getRowCount();
+            for (int i = 0; filas > i; i++) {
+                modelos.removeRow(0);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+        }
+    }
+    public void listar(){
+        limpiarTabla(jTable1);
+        modelo = (DefaultTableModel) jTable1.getModel();
+        //ArrayList<TelefonoEN> lista = c.listaCobros(1);
+        ArrayList<TelefonoEN> lista = new ArrayList<TelefonoEN>();
+        Object[] fila = new Object[7];
+        for (int i = 0; i < lista.size(); i++) {
 
+            fila[0] = i;
+            fila[1] = lista.get(i).getNumero();
+            fila[2] = lista.get(i).getTipo();
+            modelo.addRow(fila);
+        }
+       
+        jTable1.setModel(modelo);
+        
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnNuevo;

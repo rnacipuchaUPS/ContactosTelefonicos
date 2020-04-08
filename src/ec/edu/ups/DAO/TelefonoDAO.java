@@ -31,6 +31,8 @@ public class TelefonoDAO {
             statement.setString(2, telefono.getTipo());
             statement.setInt(3, telefono.getCodigoP());
             i = statement.execute();
+            System.out.println("aaquiii");
+            System.out.println("telefono "+telefono.toString());
         } catch (SQLException e) {
             System.out.println("error>>>" + e);
 
