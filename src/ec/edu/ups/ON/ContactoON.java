@@ -10,7 +10,7 @@ import ec.edu.ups.DAO.TelefonoDAO;
 import ec.edu.ups.EN.PersonaEN;
 import ec.edu.ups.EN.TelefonoEN;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.List; 
 
 /**
  *
@@ -39,6 +39,12 @@ public class ContactoON {
 
     public ArrayList<PersonaEN> listaP() {
         return pDAO.listaP();
+    }
+    public PersonaEN buscarPersona(String cedula){
+ 
+        PersonaDAO td = new PersonaDAO();
+        PersonaEN tck = td.buscarTicket(cedula);
+        return tck;
     }
 
     public boolean validarCedula(String cedula) {

@@ -137,6 +137,11 @@ public class Principal extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
 
@@ -152,7 +157,7 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 85, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnRegistrar)
                         .addGap(45, 45, 45)
                         .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -235,8 +240,8 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -308,11 +313,31 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable2MouseClicked
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-         txtcedula.setText("");
-         txtapellido.setText("");
-         txtnombre.setText("");
-         txttelefono.setText("");
+        txtcedula.setText("");
+        txtapellido.setText("");
+        txtnombre.setText("");
+        txttelefono.setText("");
+        txtcedula.setEnabled(true);
+        txtnombre.setEnabled(true);
+        txtapellido.setEnabled(true);
+        txttelefono.setEnabled(true);
+        cbxTipo.setEnabled(true);
+         
     }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+       String id = (txtBuscar.getText());
+        PersonaEN p = c.buscarPersona(txtBuscar.getText()); 
+        if (p.getCedula() == null) { 
+            JOptionPane.showMessageDialog(rootPane, "La persona consultada no existe.");
+        } else {
+            txtcedula.setText(p.getCedula());
+            txtnombre.setText(p.getNombre());
+            txtapellido.setText(p.getApellido());
+            JOptionPane.showMessageDialog(rootPane, "Persona Encontrada");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -364,7 +389,7 @@ public class Principal extends javax.swing.JFrame {
         limpiarTabla(jTable2);
           String telefonos="";
           
-        List<TelefonoEN> tel = new ArrayList<TelefonoEN>();
+        ArrayList<TelefonoEN> tel = new ArrayList<TelefonoEN>();
        
         modelo = (DefaultTableModel) jTable2.getModel();
         ArrayList<PersonaEN> lista = c.listarContactos(); 
@@ -373,10 +398,10 @@ public class Principal extends javax.swing.JFrame {
             fila[0] = lista.get(i).getCedula();
             fila[1] = lista.get(i).getNombre();
             fila[2] = lista.get(i).getApellido();
-            fila[3] = lista.get(i).getListaTelefonos();
-      
-      
-     
+           for(TelefonoEN telf:lista.get(i).getListaTelefonos()){ 
+            telefonos = telefonos + "," + telf.getNumero();
+            fila[3]=telefonos;
+           }
             modelo.addRow(fila);
         }
        

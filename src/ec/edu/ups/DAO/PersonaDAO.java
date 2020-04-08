@@ -120,5 +120,34 @@ public class PersonaDAO {
             }
             return list;
         }
-         
+    public PersonaEN buscarTicket(String cedula) {
+        TelefonoDAO vd = new TelefonoDAO();
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        PersonaEN tck = new PersonaEN();
+        con = new Conexion();
+        TelefonoEN v = null;
+        try {
+            String sql = "select cedula, nombre, apellido from persona where cedula = ?;";
+            statement = con.conectar().prepareStatement(sql);
+            statement.setString(1, cedula);
+            result = statement.executeQuery();
+            while (result.next()) {
+                tck.setCedula(result.getString(1));
+                tck.setNombre(result.getString(2));
+                tck.setApellido(result.getString(3));             
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                result.close();
+                statement.close();
+                con.cerrarConexion();
+            } catch (Exception e) {
+            }
+        }
+        return tck;
+    }
+     
 }
