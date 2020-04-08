@@ -9,7 +9,11 @@ import ec.edu.ups.EN.PersonaEN;
 import ec.edu.ups.EN.TelefonoEN;
 import ec.edu.ups.utils.Conexion;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -17,8 +21,10 @@ import java.sql.SQLException;
  */
 public class TelefonoDAO {
     private Conexion con;
-    
-    public boolean insert(TelefonoEN telefono){
+
+    public boolean insert(TelefonoEN telefono) {
+
+        System.out.println("telefono>>> " + telefono.toString());
         boolean i = false;
         con = new Conexion();
         PreparedStatement statement = null;
@@ -31,8 +37,7 @@ public class TelefonoDAO {
             statement.setString(2, telefono.getTipo());
             statement.setInt(3, telefono.getCodigoP());
             i = statement.execute();
-            System.out.println("aaquiii");
-            System.out.println("telefono "+telefono.toString());
+
         } catch (SQLException e) {
             System.out.println("error>>>" + e);
 
@@ -47,6 +52,31 @@ public class TelefonoDAO {
         }
         return i;
     }
-   
-    
+    public int ultimoNumero() {
+        Statement statement = null;
+        ResultSet result = null;
+        con = new Conexion();
+        int numero = 0;
+        try {
+            String sql = "select max(codigoP) from persona;";
+            statement = con.conectar().createStatement();
+            result = statement.executeQuery(sql);
+            while (result.next()) {
+                numero = result.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                result.close();
+                statement.close();
+                con.cerrarConexion();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        numero = numero;
+        return numero;
+    }
+ 
 }

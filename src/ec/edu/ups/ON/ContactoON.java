@@ -18,30 +18,27 @@ import java.util.List;
  */
 public class ContactoON {
     private PersonaDAO pDAO = new PersonaDAO();
-    private TelefonoDAO tDAO  = new TelefonoDAO();
+    private TelefonoDAO tDAO = new TelefonoDAO();
 
-    public void guardarContacto(PersonaEN persona) {
-        TelefonoEN t = new TelefonoEN();
-        List<TelefonoEN> telefonos = new ArrayList<TelefonoEN>();
-        if(validarCedula(persona.getCedula())){
-       // t.setNumero(t.getNumero());
-        //t.setTipo(t.getTipo());
-        //telefonos.add(t);
-         System.out.println("persona>>>>" + persona.toString());
-        persona.getListaTelefonos().add(t);       
-        int c = pDAO.insert(persona);;
-        for(TelefonoEN te: persona.getListaTelefonos()){
-            te.setCodigoP(1);
-            tDAO.insert(te);
-        }  
-        }else{
-            System.out.println("error de cedula");
+    public void guardarContacto(PersonaEN persona) throws Exception {
+        if (validarCedula(persona.getCedula())) {
+            persona.getListaTelefonos();
+            pDAO.insert(persona);
+            for (TelefonoEN te : persona.getListaTelefonos()) {
+                te.setCodigoP(tDAO.ultimoNumero());
+                tDAO.insert(te);
+            }
+        } else {
+            throw new Exception("Cedula Incorrecta");
         }
     }
 
-    public List<PersonaEN> buscarContacto(String cedula) {
+    public ArrayList<PersonaEN> listarContactos() {
+        return pDAO.listaP();
+    }
 
-        return null;
+    public ArrayList<PersonaEN> listaP() {
+        return pDAO.listaP();
     }
 
     public boolean validarCedula(String cedula) {
