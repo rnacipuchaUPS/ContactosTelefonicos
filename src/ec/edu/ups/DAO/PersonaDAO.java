@@ -120,11 +120,11 @@ public class PersonaDAO {
             }
             return list;
         }
-    public PersonaEN buscarTicket(String cedula) {
+    public PersonaEN buscarPersona(String cedula) {
         TelefonoDAO vd = new TelefonoDAO();
         PreparedStatement statement = null;
         ResultSet result = null;
-        PersonaEN tck = new PersonaEN();
+        PersonaEN p= new PersonaEN();
         con = new Conexion();
         TelefonoEN v = null;
         try {
@@ -133,9 +133,9 @@ public class PersonaDAO {
             statement.setString(1, cedula);
             result = statement.executeQuery();
             while (result.next()) {
-                tck.setCedula(result.getString(1));
-                tck.setNombre(result.getString(2));
-                tck.setApellido(result.getString(3));             
+                p.setCedula(result.getString(1));
+                p.setNombre(result.getString(2));
+                p.setApellido(result.getString(3));             
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -147,7 +147,7 @@ public class PersonaDAO {
             } catch (Exception e) {
             }
         }
-        return tck;
+        return p;
     }
      
 }

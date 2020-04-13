@@ -23,8 +23,6 @@ public class TelefonoDAO {
     private Conexion con;
 
     public boolean insert(TelefonoEN telefono) {
-
-        System.out.println("telefono>>> " + telefono.toString());
         boolean i = false;
         con = new Conexion();
         PreparedStatement statement = null;
@@ -39,8 +37,6 @@ public class TelefonoDAO {
             i = statement.execute();
 
         } catch (SQLException e) {
-            System.out.println("error>>>" + e);
-
             e.printStackTrace();
         } finally {
             try {

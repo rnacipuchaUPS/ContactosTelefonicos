@@ -43,7 +43,7 @@ public class ContactoON {
     public PersonaEN buscarPersona(String cedula){
  
         PersonaDAO td = new PersonaDAO();
-        PersonaEN tck = td.buscarTicket(cedula);
+        PersonaEN tck = td.buscarPersona(cedula);
         return tck;
     }
 
